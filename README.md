@@ -37,11 +37,13 @@ Built for **IIT Madras Centre of Excellence in Road Safety (CoERS) Hackathon 202
     <td align="center"><strong>Safety Mode</strong></td>
     <td align="center"><strong>Roadside Services</strong></td>
     <td align="center"><strong>AI First Aid</strong></td>
+    <td align="center"><strong>Incident Escalation</strong></td>
   </tr>
   <tr>
     <td><img src="docs/screenshots/safety_mode.png" width="200" /></td>
     <td><img src="docs/screenshots/roadside_services.png" width="200" /></td>
     <td><img src="docs/screenshots/ai_helper.png" width="200" /></td>
+    <td><img src="docs/screenshots/escalation_alert.png" width="200" /></td>
   </tr>
 </table>
 </div>
@@ -49,36 +51,16 @@ Built for **IIT Madras Centre of Excellence in Road Safety (CoERS) Hackathon 202
 ## 🖥️ Web Dispatcher Console (CAD)
 
 <div align="center">
-<<<<<<< HEAD
 <table>
   <tr>
     <td align="center"><strong>CAD Dashboard</strong></td>
     <td align="center"><strong>Help Dispatch</strong></td>
   </tr>
   <tr>
-    <td><img src="docs/screenshots/CAD_1.png" width="450" height="260" /></td>
-    <td><img src="docs/screenshots/CAD_2.png" width="450" height="260" /></td>
+    <td><img src="docs/screenshots/CAD_1.png" width="450" /></td>
+    <td><img src="docs/screenshots/CAD_2.png" width="450" /></td>
   </tr>
 </table>
-=======
-
-<img src="docs/screenshots/CAD_2.png" width="850" alt="CAD Dashboard — Real-Time Incident Queue &amp; Map" />
-<p><em>CAD Dashboard — Real-Time Incident Queue &amp; Interactive Map</em></p>
-
-<br>
->>>>>>> 5bb5cf6 (docs: update README with architectural diagrams, feature descriptions, and refreshed UI screenshots.)
-
-<table>
-  <tr>
-    <td align="center"><strong>Incident Escalation Alert</strong></td>
-    <td align="center"><strong>Dispatch PDF Report</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/escalation_alert.png" width="380" /></td>
-    <td><img src="docs/screenshots/CAD_Report.png" width="380" /></td>
-  </tr>
-</table>
-
 </div>
 
 ---
