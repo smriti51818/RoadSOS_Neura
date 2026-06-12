@@ -4,7 +4,7 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.4.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -32,7 +32,7 @@ dependencies:
 
   # Secure storage
   shared_preferences: ^2.2.3
-  flutter_secure_storage: ^9.0.0
+  flutter_secure_storage: ^10.3.1
 
   # Background services
   flutter_background_service: ^5.0.5
@@ -53,18 +53,18 @@ dependencies:
 
   # Communication
   url_launcher: ^6.3.0
-  share_plus: ^12.0.0
+  share_plus: ^13.1.0
 
   # Speech for Voice SOS
-  speech_to_text: ^7.0.0
+  speech_to_text: ^7.4.0
 
   # Utils
   uuid: ^4.4.0
   intl: ^0.20.0
-  battery_plus: ^6.0.1
+  battery_plus: ^7.0.0
   image_picker: ^1.1.2
-  postgres: ^3.5.11
-  flutter_contacts: ^2.1.0
+  postgres: ^3.5.12
+  flutter_contacts: ^2.2.1
   flutter_polyline_points: ^3.1.0
 dev_dependencies:
   flutter_test:

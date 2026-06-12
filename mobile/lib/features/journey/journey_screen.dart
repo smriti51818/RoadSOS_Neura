@@ -124,42 +124,83 @@ class _JourneyScreenState extends ConsumerState<JourneyScreen> {
   }
 
   // ── Reverse geocode tapped point ────────────────────────────────────────────
+  // Uses Nominatim (free, no API key) as primary geocoder.
+  // Falls back to Geoapify if a key is configured, then to raw coordinates.
   Future<void> _reverseGeocode(LatLng point) async {
     setState(() {
       _pickedPin = point;
       _isReverseGeocoding = true;
       _pickedAddress = null;
     });
+
+    // ── 1. Try Nominatim (OpenStreetMap — free, no key needed) ──────────────
     try {
-      final url = Uri.parse(
-          'https://api.geoapify.com/v1/geocode/reverse'
-          '?lat=${point.latitude}&lon=${point.longitude}'
-          '&apiKey=${AppConstants.geoapifyApiKey}');
-      final res = await http.get(url).timeout(const Duration(seconds: 6));
+      final nominatimUrl = Uri.parse(
+        'https://nominatim.openstreetmap.org/reverse'
+        '?lat=${point.latitude}&lon=${point.longitude}'
+        '&format=json&addressdetails=1',
+      );
+      final res = await http.get(nominatimUrl, headers: {
+        'User-Agent': 'RoadSOS/1.0 (roadsos.app)',
+        'Accept-Language': 'en',
+      }).timeout(const Duration(seconds: 8));
+
       if (res.statusCode == 200) {
-        final data = jsonDecode(res.body);
-        final features = data['features'] as List?;
-        if (features != null && features.isNotEmpty) {
-          final address =
-              features[0]['properties']['formatted'] as String? ?? '';
+        final data = jsonDecode(res.body) as Map<String, dynamic>?;
+        final displayName = data?['display_name'] as String?;
+        if (displayName != null && displayName.isNotEmpty) {
           if (mounted) {
             setState(() {
-              _pickedAddress = address;
+              _pickedAddress = displayName;
               _isReverseGeocoding = false;
             });
-            _destinationController.text = address;
+            _destinationController.text = displayName;
           }
           return;
         }
       }
     } catch (_) {}
+
+    // ── 2. Try Geoapify if a real API key is configured ──────────────────────
+    final geoKey = AppConstants.geoapifyApiKey;
+    if (geoKey.isNotEmpty &&
+        !geoKey.startsWith('YOUR_') &&
+        geoKey != 'your-geoapify-api-key') {
+      try {
+        final url = Uri.parse(
+          'https://api.geoapify.com/v1/geocode/reverse'
+          '?lat=${point.latitude}&lon=${point.longitude}'
+          '&apiKey=$geoKey',
+        );
+        final res = await http.get(url).timeout(const Duration(seconds: 6));
+        if (res.statusCode == 200) {
+          final data = jsonDecode(res.body);
+          final features = data['features'] as List?;
+          if (features != null && features.isNotEmpty) {
+            final address =
+                features[0]['properties']['formatted'] as String? ?? '';
+            if (address.isNotEmpty && mounted) {
+              setState(() {
+                _pickedAddress = address;
+                _isReverseGeocoding = false;
+              });
+              _destinationController.text = address;
+              return;
+            }
+          }
+        }
+      } catch (_) {}
+    }
+
+    // ── 3. Final fallback: raw coordinates ───────────────────────────────────
     if (mounted) {
+      final coords =
+          '${point.latitude.toStringAsFixed(5)}, ${point.longitude.toStringAsFixed(5)}';
       setState(() {
-        _pickedAddress =
-            '${point.latitude.toStringAsFixed(5)}, ${point.longitude.toStringAsFixed(5)}';
+        _pickedAddress = coords;
         _isReverseGeocoding = false;
       });
-      _destinationController.text = _pickedAddress!;
+      _destinationController.text = coords;
     }
   }
 

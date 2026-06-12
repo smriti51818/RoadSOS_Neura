@@ -20,7 +20,9 @@ pluginManagement {
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
     id("com.android.application") version "9.0.1" apply false
-    id("org.jetbrains.kotlin.android") version "2.3.20" apply false
+    // Pin KGP version for third-party plugins (battery_plus, share_plus, etc.) that still use KGP internally.
+    // apply false = NOT applied to this app (avoids the Flutter KGP warning), only pins the version.
+    id("org.jetbrains.kotlin.android") version "2.2.20" apply false
 }
 
 include(":app")

@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
@@ -112,9 +113,10 @@ class _IncidentStatusScreenState extends ConsumerState<IncidentStatusScreen> {
     if (!mounted) return;
 
     final incidentId = const Uuid().v4();
+    final now = DateTime.now();
     final record = IncidentRecord(
       id: incidentId,
-      timestamp: DateTime.now(),
+      timestamp: now,
       service: widget.service,
       photos: widget.photos,
       status: 'Received',
@@ -126,8 +128,38 @@ class _IncidentStatusScreenState extends ConsumerState<IncidentStatusScreen> {
       _incidentId = incidentId;
     });
 
+    // Send to dashboard — fire and forget, never blocks UI
+    _sendToDashboard(incidentId, now);
+
     _startPolling(incidentId);
     _startEscalationTimer();
+  }
+
+  Future<void> _sendToDashboard(String incidentId, DateTime timestamp) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userPhone = prefs.getString('user_phone') ?? '';
+      final userName = prefs.getString('user_name') ?? '';
+      final bloodGroup = prefs.getString('blood_group') ?? '';
+
+      if (userPhone.isNotEmpty) {
+        await DbService.upsertUser(userPhone, userName, bloodGroup);
+      }
+
+      await DbService.insertIncident(
+        id: incidentId,
+        userPhone: userPhone,
+        serviceName: widget.service.name,
+        lat: widget.service.lat,
+        lng: widget.service.lng,
+        status: 'Received',
+        timestamp: timestamp,
+        photos: widget.photos,
+      );
+      debugPrint('[IncidentStatus] Dashboard notified ✓ id=$incidentId');
+    } catch (e) {
+      debugPrint('[IncidentStatus] Dashboard sync failed (non-fatal): $e');
+    }
   }
 
   void _startPolling(String incidentId) {

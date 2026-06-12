@@ -1,17 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fb;
-  --foreground: #111827;
-  --font-sans: var(--font-inter);
+  --font-body: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+
+  /* App palette */
+  --slate-50:  #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+
+  --red:    #E11D48;
+  --blue:   #2563EB;
+  --green:  #10B981;
+  --amber:  #D97706;
+  --purple: #6366F1;
+  --orange: #EA580C;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--slate-50);
+  color: var(--slate-900);
+  font-family: var(--font-body);
 }
+
+/* Shared card style */
+.card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1.5px solid var(--slate-100);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.03), 0 2px 4px rgba(15, 23, 42, 0.02);
+}
+
+/* Section label used across panels */
+.section-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--slate-200); border-radius: 4px; }
