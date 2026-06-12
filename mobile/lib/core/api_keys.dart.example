@@ -1,0 +1,13 @@
+// lib/core/api_keys.dart.example
+//
+// Copy this file to api_keys.dart and fill in your actual API keys.
+// api_keys.dart is gitignored — never commit real keys.
+//
+//   cp lib/core/api_keys.dart.example lib/core/api_keys.dart
+
+const kGeoapifyApiKey     = 'YOUR_GEOAPIFY_KEY';
+const kGooglePlacesApiKey = 'YOUR_GOOGLE_PLACES_KEY';
+const kMapplsApiKey       = 'YOUR_MAPPLS_KEY';
+const kGeminiApiKey       = 'YOUR_GEMINI_KEY';
+const kSupabaseUrl        = 'https://YOUR_PROJECT.supabase.co';
+const kSupabaseAnonKey    = 'YOUR_SUPABASE_ANON_KEY';

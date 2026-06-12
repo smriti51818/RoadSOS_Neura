@@ -1,0 +1,54 @@
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+*.g.dart
+*.freezed.dart
+lib/generated/
+.packages
+.pub-cache/
+.pub/
+mobile/.dart_tool/
+mobile/build/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+.eggs/
+*.whl
+
+# Environment secrets — never commit
+.env
+.env.local
+.env.production
+backend/.env
+
+# OS artefacts
+.DS_Store
+Thumbs.db
+*.log
+*.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Coverage
+coverage/
+*.lcov
+htmlcov/
+
+# Distribution
+.vercel/
+node_modules/
+
+# Do NOT ignore pubspec.lock — keeps builds reproducible
+# pubspec.lock

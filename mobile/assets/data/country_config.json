@@ -1,0 +1,144 @@
+{
+  "IN": {
+    "name": "India",
+    "emergency_numbers": {
+      "police": "100",
+      "ambulance": "108",
+      "fire": "101",
+      "unified": "112",
+      "women": "1091",
+      "women_alt": "181",
+      "nhai": "1033",
+      "traffic": "103",
+      "disaster": "108"
+    },
+    "map_provider": "mappls",
+    "data_sources": ["mappls", "data_gov_in", "nha", "osm"],
+    "offline_pack": "india_{state_code}.db",
+    "urban_radius_km": 5,
+    "rural_radius_km": 50,
+    "is_supported": true
+  },
+  "US": {
+    "name": "United States",
+    "emergency_numbers": {
+      "police": "911",
+      "ambulance": "911",
+      "fire": "911",
+      "unified": "911"
+    },
+    "map_provider": "osm",
+    "data_sources": ["hifld_archive", "osm"],
+    "offline_pack": "us_{state_code}.db",
+    "urban_radius_km": 8,
+    "rural_radius_km": 80,
+    "is_supported": true
+  },
+  "GB": {
+    "name": "United Kingdom",
+    "emergency_numbers": {
+      "police": "999",
+      "ambulance": "999",
+      "fire": "999",
+      "unified": "999",
+      "non_emergency_police": "101"
+    },
+    "map_provider": "osm",
+    "data_sources": ["nhs_cqc", "osm"],
+    "offline_pack": "gb_national.db",
+    "urban_radius_km": 5,
+    "rural_radius_km": 30,
+    "is_supported": true
+  },
+  "KE": {
+    "name": "Kenya",
+    "emergency_numbers": {
+      "police": "999",
+      "ambulance": "999",
+      "fire": "999",
+      "unified": "999",
+      "ambulance_alt": "0800720999"
+    },
+    "map_provider": "osm",
+    "data_sources": ["hdx", "osm"],
+    "offline_pack": "ke_national.db",
+    "urban_radius_km": 8,
+    "rural_radius_km": 80,
+    "is_supported": true
+  },
+  "AU": {
+    "name": "Australia",
+    "emergency_numbers": {
+      "police": "000",
+      "ambulance": "000",
+      "fire": "000",
+      "unified": "000",
+      "non_emergency": "131444"
+    },
+    "map_provider": "osm",
+    "data_sources": ["osm"],
+    "offline_pack": "au_{state_code}.db",
+    "urban_radius_km": 10,
+    "rural_radius_km": 200,
+    "is_supported": true
+  },
+  "DE": {
+    "name": "Germany",
+    "emergency_numbers": {
+      "police": "110",
+      "ambulance": "112",
+      "fire": "112",
+      "unified": "112"
+    },
+    "map_provider": "osm",
+    "data_sources": ["osm"],
+    "offline_pack": "de_national.db",
+    "urban_radius_km": 5,
+    "rural_radius_km": 25,
+    "is_supported": true
+  },
+  "FR": {
+    "name": "France",
+    "emergency_numbers": {
+      "police": "17",
+      "ambulance": "15",
+      "fire": "18",
+      "unified": "112",
+      "eu_emergency": "112"
+    },
+    "map_provider": "osm",
+    "data_sources": ["osm"],
+    "offline_pack": "fr_national.db",
+    "urban_radius_km": 5,
+    "rural_radius_km": 30,
+    "is_supported": true
+  },
+  "SG": {
+    "name": "Singapore",
+    "emergency_numbers": {
+      "police": "999",
+      "ambulance": "995",
+      "fire": "995",
+      "unified": "999",
+      "non_emergency": "1800-255-0000"
+    },
+    "map_provider": "osm",
+    "data_sources": ["osm"],
+    "offline_pack": "sg_national.db",
+    "urban_radius_km": 5,
+    "rural_radius_km": 15,
+    "is_supported": true
+  },
+  "DEFAULT": {
+    "name": "Global",
+    "emergency_numbers": {
+      "unified": "112"
+    },
+    "map_provider": "osm",
+    "data_sources": ["hdx", "osm"],
+    "offline_pack": "global_default.db",
+    "urban_radius_km": 10,
+    "rural_radius_km": 100,
+    "is_supported": true
+  }
+}

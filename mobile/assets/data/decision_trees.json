@@ -1,0 +1,99 @@
+{
+  "breakdown": {
+    "keywords": [
+      "tyre", "burst", "engine", "fuel", "stuck", "breakdown", "flat",
+      "puncture", "battery", "stalled", "smoke", "overheating",
+      "won't start", "no fuel", "car stopped", "vehicle stopped"
+    ],
+    "steps": [
+      "Turn on hazard lights immediately",
+      "Move as far left off the road as possible",
+      "Place reflective triangle 50m behind vehicle",
+      "Call NHAI helpline: 1033",
+      "Stay in vehicle with doors locked if unsafe outside"
+    ],
+    "show_services": ["towing", "breakdown", "puncture"],
+    "call_first": "1033",
+    "severity": "medium"
+  },
+  "accident_injury": {
+    "keywords": [
+      "accident", "crash", "collision", "injured", "hurt", "bleeding",
+      "unconscious", "hit", "fell", "knocked", "vehicle", "road", "car",
+      "truck", "bike", "motorbike", "died", "serious", "pain", "head injury",
+      "fracture", "broken", "multiple victims"
+    ],
+    "steps": [
+      "Call 108 ambulance immediately — do not delay",
+      "Do NOT move injured person unless fire risk",
+      "Turn on hazard lights and place warning triangle",
+      "Keep victim warm, conscious — talk to them",
+      "Clear traffic from around the scene safely"
+    ],
+    "show_services": ["ambulance", "hospital", "police"],
+    "call_first": "108",
+    "severity": "high"
+  },
+  "fire": {
+    "keywords": [
+      "fire", "burning", "smoke", "flame", "explosion", "petrol", "diesel",
+      "engine fire", "vehicle fire", "bonnet smoke", "fuel leak", "sparks"
+    ],
+    "steps": [
+      "Move everyone at least 100 metres away immediately",
+      "Call 101 (Fire) or 112 (Unified)",
+      "Do NOT open the bonnet if smoke is from engine",
+      "Never return to a burning vehicle for any reason",
+      "Warn other road users to keep distance"
+    ],
+    "show_services": ["fire", "ambulance", "police"],
+    "call_first": "101",
+    "severity": "high"
+  },
+  "unsafe_threat": {
+    "keywords": [
+      "unsafe", "threat", "scared", "followed", "danger", "suspicious",
+      "alone", "harassed", "attacked", "stalked", "highway", "night",
+      "robbery", "assault", "molestation", "eve teasing", "car following"
+    ],
+    "steps": [
+      "Drive to the nearest police station or petrol pump",
+      "Call 100 (Police) or 1091 (Women Helpline) immediately",
+      "Share your live location with a trusted contact",
+      "Stay in a lit, populated area — do not stop remotely"
+    ],
+    "show_services": ["police", "helpline"],
+    "call_first": "100",
+    "severity": "high"
+  },
+  "medical_emergency": {
+    "keywords": [
+      "heart", "chest pain", "breathing", "seizure", "unconscious",
+      "diabetic", "stroke", "faint", "collapse", "allergic", "reaction",
+      "not breathing", "pulse", "pregnant", "labour", "heart attack",
+      "breathless", "fits", "convulsions", "overdose"
+    ],
+    "steps": [
+      "Call 108 ambulance immediately",
+      "Do not give food or water",
+      "Keep person still and comfortable",
+      "Talk to them — hearing is the last sense lost",
+      "Follow dispatcher instructions until ambulance arrives"
+    ],
+    "show_services": ["ambulance", "hospital"],
+    "call_first": "108",
+    "severity": "high"
+  },
+  "unknown": {
+    "keywords": [],
+    "steps": [
+      "Turn on hazard lights if you are in a vehicle",
+      "Move to a safe location away from traffic",
+      "Call 112 — unified emergency works everywhere in India",
+      "Share your location with someone you trust"
+    ],
+    "show_services": ["police", "hospital", "ambulance"],
+    "call_first": "112",
+    "severity": "medium"
+  }
+}
