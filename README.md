@@ -52,11 +52,11 @@ Built for **IIT Madras Centre of Excellence in Road Safety (CoERS) Hackathon 202
 <table>
   <tr>
     <td align="center"><strong>CAD Dashboard</strong></td>
-    <td align="center"><strong>Incident Escalation</strong></td>
+    <td align="center"><strong>Help Dispatch</strong></td>
   </tr>
   <tr>
+    <td><img src="docs/screenshots/CAD_1.png" width="450" height="260" /></td>
     <td><img src="docs/screenshots/CAD_2.png" width="450" height="260" /></td>
-    <td><img src="docs/screenshots/escalation_alert.png" width="450" height="260" /></td>
   </tr>
 </table>
 
