@@ -29,6 +29,8 @@ dist/
 .env.local
 .env.production
 backend/.env
+mobile/.env
+mobile/lib/core/api_keys.dart
 
 # OS artefacts
 .DS_Store

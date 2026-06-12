@@ -3,10 +3,10 @@ import 'package:postgres/postgres.dart';
 void main() async {
   final connection = await Connection.open(
     Endpoint(
-      host: 'ep-proud-hall-aomwr005-pooler.c-2.ap-southeast-1.aws.neon.tech',
+      host: 'YOUR_NEON_HOST',
       database: 'neondb',
-      username: 'neondb_owner',
-      password: 'npg_Jp8auMDi9LQo',
+      username: 'YOUR_NEON_USER',
+      password: 'YOUR_NEON_PASSWORD',
     ),
     settings: const ConnectionSettings(
       sslMode: SslMode.require,
