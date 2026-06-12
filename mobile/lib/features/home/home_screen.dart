@@ -9,6 +9,7 @@ import '../../core/theme.dart';
 import '../../data/models/service_model.dart';
 import '../../widgets/battery_warning_banner.dart';
 import '../../widgets/bottom_nav.dart';
+import '../../widgets/helpline_sheet.dart';
 import '../../widgets/offline_banner.dart';
 import '../safety/safety_provider.dart';
 import 'home_provider.dart';
@@ -701,28 +702,28 @@ class _EmergencyGrid extends StatelessWidget {
               typeKey: 'accident',
               label: 'Accident & Injury',
               description: 'Vehicle collision, trauma',
-              icon: Icons.directions_car_outlined, // Reference Image Car
+              icon: Icons.car_crash_outlined,
               iconColor: AppTheme.emergencyRed,
             ),
             _GridCell(
               typeKey: 'fire',
               label: 'Fire on Road',
               description: 'Vehicle fires, spills, hazards',
-              icon: Icons.local_fire_department_outlined, // Reference Image Flame
+              icon: Icons.local_fire_department_outlined,
               iconColor: Color(0xFFEA580C),
             ),
             _GridCell(
               typeKey: 'medical',
               label: 'Medical Emergency',
               description: 'Cardiac, breathing distress',
-              icon: Icons.medical_services_outlined, // Reference Image Kit
+              icon: Icons.monitor_heart_outlined,
               iconColor: Color(0xFF2563EB),
             ),
             _GridCell(
               typeKey: 'unsafe',
               label: 'Unsafe / Threat',
               description: 'Assault, transit monitoring',
-              icon: Icons.gpp_maybe_outlined, // Reference Image Shield with Exclamation
+              icon: Icons.personal_injury_outlined,
               iconColor: Color(0xFF0F172A),
             ),
           ],
@@ -764,14 +765,14 @@ class _NonEmergencyGrid extends StatelessWidget {
               typeKey: 'towing',
               label: 'Towing Service',
               description: 'Flatbeds, recovery transit',
-              icon: Icons.rv_hookup_outlined,
+              icon: Icons.car_repair_outlined,
               iconColor: Color(0xFF0D9488),
             ),
             _GridCell(
               typeKey: 'breakdown',
               label: 'Breakdown Help',
               description: 'Jump starts, locks, fuel',
-              icon: Icons.construction_outlined,
+              icon: Icons.handyman_outlined,
               iconColor: Color(0xFF059669),
             ),
             _GridCell(
@@ -783,9 +784,9 @@ class _NonEmergencyGrid extends StatelessWidget {
             ),
             _GridCell(
               typeKey: 'helpline',
-              label: 'Helpline Support',
-              description: 'Legal advice, route queries',
-              icon: Icons.headset_mic_outlined,
+              label: 'Helpline & Numbers',
+              description: '112 · 108 · 100 · 1033',
+              icon: Icons.phone_in_talk_outlined,
               iconColor: Color(0xFF7C3AED),
             ),
           ],
@@ -810,8 +811,7 @@ class _GridCell extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
 
-  // Non-emergency service categories that bypass triage and go straight to results.
-  static const _nonEmergencyKeys = {'towing', 'breakdown', 'puncture', 'helpline'};
+  static const _nonEmergencyKeys = {'towing', 'breakdown', 'puncture'};
 
   @override
   Widget build(BuildContext context) {
@@ -819,20 +819,16 @@ class _GridCell extends StatelessWidget {
       onTap: () {
         if (typeKey == 'unsafe') {
           context.push('/safety');
+        } else if (typeKey == 'helpline') {
+          showHelplineSheet(context);
         } else if (_nonEmergencyKeys.contains(typeKey)) {
-          if (typeKey == 'helpline') {
-            // Helpline has no POI results — go to the non-emergency hub which
-            // scrolls down to the static national helplines section.
-            context.push('/non-emergency');
-          } else {
-            context.push('/results', extra: {
-              'sessionId': '',
-              'emergencyType': typeKey,
-              'victimType': 'none',
-              'isNonEmergency': true,
-              'nonEmergencyCategory': typeKey,
-            });
-          }
+          context.push('/results', extra: {
+            'sessionId': '',
+            'emergencyType': typeKey,
+            'victimType': 'none',
+            'isNonEmergency': true,
+            'nonEmergencyCategory': typeKey,
+          });
         } else {
           context.push('/triage', extra: {'emergencyType': typeKey});
         }

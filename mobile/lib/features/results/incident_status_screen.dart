@@ -278,9 +278,7 @@ class _IncidentStatusScreenState extends ConsumerState<IncidentStatusScreen> {
                                   ],
                                   strokeWidth: 3.5,
                                   color: const Color(0xFF10B981),
-                                  pattern: const StrokePattern.dashed(
-                                    segments: [8, 6],
-                                  ),
+                                  isDotted: true,
                                 ),
                               ],
                             ),

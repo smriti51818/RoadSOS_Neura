@@ -1,18 +1,12 @@
 // lib/features/non_emergency/non_emergency_screen.dart
-// Module 5 — Dedicated non-emergency services screen.
-//
-// Navigation entry: home screen non-emergency grid cell → /non-emergency
-// Navigation exit:  category card tap → /results with nonEmergencyCategory=X
-//
-// This screen is a selection hub — no live data fetching. The actual service
-// lookup happens in ResultsNotifier after the user selects a category.
-// Static NHAI/traffic helpline numbers are always shown at the bottom.
+// Roadside services hub — towing, breakdown, puncture repair.
+// Helpline numbers are surfaced via the shared HelplineSheet bottom sheet.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../widgets/helpline_sheet.dart';
 
 import '../../core/theme.dart';
 import '../../widgets/offline_banner.dart';
@@ -126,26 +120,11 @@ class _NonEmergencyBody extends StatefulWidget {
 
 class _NonEmergencyBodyState extends State<_NonEmergencyBody> {
   final _scrollController = ScrollController();
-  // Key on the National Helplines section — used by Road Helpline card to
-  // scroll directly to it rather than navigating to the (empty) results screen.
-  final _helplineKey = GlobalKey();
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _scrollToHelplines() {
-    final ctx = _helplineKey.currentContext;
-    if (ctx != null) {
-      Scrollable.ensureVisible(
-        ctx,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-        alignment: 0.0, // align top of section to top of viewport
-      );
-    }
   }
 
   @override
@@ -196,7 +175,7 @@ class _NonEmergencyBodyState extends State<_NonEmergencyBody> {
                   category: 'breakdown',
                   label: 'Breakdown Help',
                   subtitle: 'On-road repair',
-                  icon: Icons.build_rounded,
+                  icon: Icons.handyman_rounded,
                   color: Color(0xFF16A34A),
                   bgColor: Color(0xFFEFFAF3),
                   iconBg: Color(0xFFBBF7D0),
@@ -210,88 +189,19 @@ class _NonEmergencyBodyState extends State<_NonEmergencyBody> {
                   bgColor: Color(0xFFFFFBEB),
                   iconBg: Color(0xFFFDE68A),
                 ),
-                // Road Helpline scrolls to the static helplines section below
-                // instead of navigating to the results screen (which has no
-                // POI data for helplines — they are always static numbers).
-                _CategoryCard(
-                  category: 'helpline',
-                  label: 'Road Helpline',
-                  subtitle: 'NHAI & assistance',
-                  icon: Icons.headset_mic_rounded,
-                  color: const Color(0xFF7C3AED),
-                  bgColor: const Color(0xFFF5F0FF),
-                  iconBg: const Color(0xFFE0D5FF),
-                  onTap: _scrollToHelplines,
+                Builder(
+                  builder: (ctx) => _CategoryCard(
+                    category: 'helpline',
+                    label: 'Emergency Numbers',
+                    subtitle: '112 · 108 · 100 · 1033',
+                    icon: Icons.phone_in_talk_rounded,
+                    color: const Color(0xFF7C3AED),
+                    bgColor: const Color(0xFFF5F0FF),
+                    iconBg: const Color(0xFFE0D5FF),
+                    onTap: () => showHelplineSheet(ctx),
+                  ),
                 ),
               ],
-            ),
-          ),
-
-          // ── National helplines (static, always available) ─────────────────
-          // _helplineKey anchors this section so the Road Helpline card can
-          // scroll here via Scrollable.ensureVisible.
-          Padding(
-            key: _helplineKey,
-            padding: const EdgeInsets.fromLTRB(16, 28, 16, 0),
-            child: Text(
-              'NATIONAL HELPLINES',
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 11,
-                fontWeight: FontWeight.w800,
-                color: const Color(0xFF64748B),
-                letterSpacing: 1.2,
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              decoration: AppTheme.premiumCardDecoration,
-              clipBehavior: Clip.antiAlias,
-              child: const Column(
-                children: [
-                  _HelplineRow(
-                    label: 'NHAI Road Helpline',
-                    number: '1033',
-                    subtitle: 'Highways breakdown & accidents',
-                    icon: Icons.add_road_rounded,
-                    color: Color(0xFF16A34A),
-                  ),
-                  _Divider(),
-                  _HelplineRow(
-                    label: 'Traffic Police',
-                    number: '103',
-                    subtitle: 'Road accidents & traffic control',
-                    icon: Icons.local_police_rounded,
-                    color: Color(0xFF1D4ED8),
-                  ),
-                  _Divider(),
-                  _HelplineRow(
-                    label: 'Women Helpline',
-                    number: '1091',
-                    subtitle: 'Women in distress',
-                    icon: Icons.shield_rounded,
-                    color: Color(0xFF7C3AED),
-                  ),
-                  _Divider(),
-                  _HelplineRow(
-                    label: 'Disaster Management',
-                    number: '108',
-                    subtitle: 'Emergency response services',
-                    icon: Icons.warning_amber_rounded,
-                    color: Color(0xFFEA580C),
-                  ),
-                  _Divider(),
-                  _HelplineRow(
-                    label: 'Unified Emergency',
-                    number: '112',
-                    subtitle: 'All emergencies (police/fire/medical)',
-                    icon: Icons.phone_in_talk_rounded,
-                    color: Color(0xFFDC2626),
-                  ),
-                ],
-              ),
             ),
           ),
 
@@ -395,104 +305,4 @@ class _CategoryCard extends StatelessWidget {
   }
 }
 
-// ── Helpline row ───────────────────────────────────────────────────────────────
-
-class _HelplineRow extends StatelessWidget {
-  const _HelplineRow({
-    required this.label,
-    required this.number,
-    required this.subtitle,
-    required this.icon,
-    required this.color,
-  });
-
-  final String label;
-  final String number;
-  final String subtitle;
-  final IconData icon;
-  final Color color;
-
-  Future<void> _call() async {
-    final uri = Uri(scheme: 'tel', path: number);
-    await launchUrl(uri);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: _call,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, size: 20, color: color),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: const Color(0xFF0F172A),
-                    ),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF64748B),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                number,
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  color: color,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Divider extends StatelessWidget {
-  const _Divider();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Divider(
-      height: 1,
-      indent: 68,
-      endIndent: 0,
-      color: AppTheme.borderColor,
-    );
-  }
-}
 
